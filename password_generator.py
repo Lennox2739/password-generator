@@ -4,6 +4,8 @@ import sqlite3
 import string
 import secrets
 import qrcode
+from qrcode import QRCode
+from PIL.ImageTk import PhotoImage
 from PIL import ImageTk
 from datetime import datetime
 
