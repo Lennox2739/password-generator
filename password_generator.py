@@ -4,8 +4,6 @@ import sqlite3
 import string
 import secrets
 import qrcode
-from qrcode import QRCode
-from PIL.ImageTk import PhotoImage
 from PIL import ImageTk
 from datetime import datetime
 
@@ -112,7 +110,7 @@ class PasswordGenerator:
 
         try:
             self.cursor.execute("INSERT INTO passwords (service, password, created_at) VALUES (?, ?, ?)",
-                              (service, password, datetime.now()))
+                              (service, password, datetime.now().isoformat()))
             self.conn.commit()
             messagebox.showinfo("Success", "Password saved!")
             self.service_entry.delete(0, tk.END)
@@ -149,10 +147,10 @@ class PasswordGenerator:
 
         qr = qrcode.QRCode()
         qr.add_data(password)
-        qr.make()
+        qr = qrcode.QRCode()
 
         img = qr.make_image(fill_color="black", back_color="white")
-        photo = ImageTk.PhotoImage(img)
+        photo = ImageTk.PhotoImage(img.convert("RGB"))
 
         qr_window = tk.Toplevel(self.root)
         qr_window.title("QR Code")
